@@ -219,11 +219,7 @@ public class Utilities implements ANNIEConstants {
     submap.put(term, value);
     map.put(type, submap);
   }
-  
-  
-  /**
-   * Forces the ultimate value to be Integer. 
-   */
+
   public static void incrementScoreTermValue(Map<ScoreType, Map<Term, Number>> map, 
           ScoreType type, Term term, Integer increment) {
     Map<Term, Number> submap;

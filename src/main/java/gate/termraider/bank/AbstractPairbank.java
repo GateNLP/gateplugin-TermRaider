@@ -195,8 +195,8 @@ public abstract class AbstractPairbank extends AbstractBank
 
   /**
    * Convenience method to save everything in the termbank.
-   * @param outputFile
-   * @throws GateException
+   * @param outputFile the file to save the termbank into
+   * @throws GateException if an error occurs saving the termbank
    */
   public void saveAsCsv(File outputFile) throws GateException {
     PairCsvGenerator generator = new PairCsvGenerator();

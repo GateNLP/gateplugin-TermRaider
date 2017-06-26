@@ -93,7 +93,7 @@ public class Term  implements Comparable<Term>, Serializable {
    * To determine whether a match from a DF table is usable.
    * Type and string must match; language code is ignored if either
    * is blank, but must match if both are non-blank.
-   * @param other
+   * @param other the other Term to compare against
    * @return true if the terms match close enough, false otherwise
    */
   public boolean closeMatch(Term other) {

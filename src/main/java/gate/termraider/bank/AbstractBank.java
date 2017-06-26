@@ -26,7 +26,7 @@ import java.util.Set;
 /**
  * A thing that has a score name, can be saved as CSV, and 
  * can be used to generate a SliderPanel (which needs 
- * min & max scores).
+ * min &amp; max scores).
  */
 public abstract class AbstractBank extends AbstractLanguageResource {
 

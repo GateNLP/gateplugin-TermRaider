@@ -319,9 +319,6 @@ public class PMIBank extends AbstractPairbank
     }
   }
 
-  
-  /***** CREOLE PARAMETERS *****/
-
   @CreoleParameter(comment = "annotation types to evaluate as terms",
           defaultValue = "Entity")
   public void setInnerAnnotationTypes(Set<String> types) {

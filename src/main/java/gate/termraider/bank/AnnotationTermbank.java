@@ -120,9 +120,6 @@ public class AnnotationTermbank extends AbstractTermbank
     this.scoreTypes.add(localDocFrequencyST);
   }
 
-  
-  /***** CREOLE PARAMETERS *****/
-
   @CreoleParameter(comment = "annotation feature containing the score to index",
           defaultValue = "localAugTfIdf")
   public void setInputScoreFeature(String annScoreFeature) {

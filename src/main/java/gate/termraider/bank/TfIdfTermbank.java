@@ -121,7 +121,6 @@ public class TfIdfTermbank extends AbstractTermbank
     return this.documentCount;
   }
   
-  /***** CREOLE PARAMETERS *****/
   @Optional
   @CreoleParameter(comment = "document frequency bank (unset = create from these corpora)")
   public void setDocFreqSource(DocumentFrequencyBank dfb) {

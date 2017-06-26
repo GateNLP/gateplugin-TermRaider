@@ -168,10 +168,6 @@ public class HyponymyTermbank extends AbstractTermbank
     this.scoreTypes.add(localDocFrequencyST);
   }
 
-  
-  
-  /***** CREOLE PARAMETERS *****/
-
   @CreoleParameter(comment = "Annotation features (in order) to be scanned as terms' heads")
   public void setInputHeadFeatures(List<String> list) {
     this.inputHeadFeatures = list;
