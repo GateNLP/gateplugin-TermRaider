@@ -44,18 +44,7 @@ public class TermScoreCopier extends AbstractLanguageAnalyser
   /* CREOLE PARAMETERS */
   private AbstractTermbank termbank;
   private String annotationSetName;
-  private String frequencyFeature, docFrequencyFeature;
-  
-  
-  public Resource init() throws ResourceInstantiationException {
-    return super.init();
-  }
-  
-  
-  public void reInit() throws ResourceInstantiationException {
-    this.init();
-  }
-  
+  private String frequencyFeature, docFrequencyFeature;  
   
   public void execute() throws ExecutionException {
     interrupted = false;
@@ -83,8 +72,8 @@ public class TermScoreCopier extends AbstractLanguageAnalyser
       // What the heck, slap them all on the annotation features.
       // You can't put too many features in a nuclear reactor.
       Map<ScoreType, Number> scoreMap = termbank.getScoreMap(term);
-      for (ScoreType st : scoreMap.keySet()) {
-        fm.put(st.toString(), scoreMap.get(st));
+      for (Map.Entry<ScoreType,Number> entry : scoreMap.entrySet()) {
+        fm.put(entry.getKey().toString(), entry.getValue());
       }
       
       checkInterruption();

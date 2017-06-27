@@ -159,8 +159,8 @@ public abstract class AbstractTermbank extends AbstractBank
   private void findMinAndMaxDefaultScores() {
     Collection<Number> values = this.getDefaultScores().values();
     if (values.isEmpty()) {
-      minDefaultScore = new Integer(0);
-      maxDefaultScore = new Integer(1);
+      minDefaultScore = 0;
+      maxDefaultScore = 1;
     }
     else {
       minDefaultScore = values.iterator().next();
