@@ -54,7 +54,7 @@ public enum Normalization {
    */
   private static double normalizeScore(double score, double xScale) {
     double norm = 2.0 / (1.0 + Math.exp(-score / xScale)) - 1.0;
-    return (double) (100.0F * norm);
+    return 100.0F * norm;
   }
   
   /* Note: Normalization mode does not apply to the AnnotationTermbank, since it

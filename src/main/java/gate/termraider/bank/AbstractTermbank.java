@@ -224,7 +224,7 @@ public abstract class AbstractTermbank extends AbstractBank
   protected void processCorpus(Corpus corpus) {
     for (int i=0 ; i < corpus.size() ; i++) {
       boolean wasLoaded = corpus.isDocumentLoaded(i);
-      Document document = (Document) corpus.get(i);
+      Document document = corpus.get(i);
       
       processDocument(document, i);
 

@@ -143,7 +143,7 @@ public abstract class AbstractPairbank extends AbstractBank
   protected void processCorpus(Corpus corpus) {
     for (int i=0 ; i < corpus.size() ; i++) {
       boolean wasLoaded = corpus.isDocumentLoaded(i);
-      Document document = (Document) corpus.get(i);
+      Document document = corpus.get(i);
       
       addData(document, i);
 
