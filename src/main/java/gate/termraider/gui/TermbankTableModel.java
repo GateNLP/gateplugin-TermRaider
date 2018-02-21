@@ -42,8 +42,9 @@ public class TermbankTableModel extends AbstractTableModel {
 
 
   public int getColumnCount() {
-    // 1 column for the Term itself
-    return this.scoreTypes.size() + 1;
+	  // 1 column for the Term, 1 for the type, 1 for the language code;
+	  // 1 for each score 
+    return this.scoreTypes.size() + 3;
   }
 
   
@@ -55,18 +56,24 @@ public class TermbankTableModel extends AbstractTableModel {
   public Object getValueAt(int row, int col) {
     Term term = this.terms.get(row); 
     if (col == 0) {
-      return term.toString();
+    	return term.getTermString();
+    }
+    if (col == 1) {
+    	return term.getType();
+    }
+    if (col == 2) {
+    	return term.getLanguageCode();
     }
     
     // Implied else: look the score up;
-    // remember that the scoreType index is off by 1 from the column
-    ScoreType type = scoreTypes.get(col - 1);
+    // remember that the scoreType index is off by 3 from the column
+    ScoreType type = scoreTypes.get(col - 3);
     return this.termbank.getScore(type, term);
   }
 
 
   public Class<?> getColumnClass(int col) {
-    if (col == 0) {
+    if (col < 3) {
       return String.class;
     }
     // implied else
@@ -78,14 +85,20 @@ public class TermbankTableModel extends AbstractTableModel {
     if (col == 0) {
       return "term";
     }
+    if (col == 1) {
+    	return "type";
+    }
+    if (col == 2) {
+    	return "lang";
+    }
     
-    return this.scoreTypes.get(col - 1).toString();
+    return this.scoreTypes.get(col - 3).toString();
   }
 
   
   public void setComparators(TableRowSorter<TermbankTableModel> sorter) {
     Comparator<Number> numberComparator = new NumberComparator();
-    for (int i = 1 ; i < this.getColumnCount() ; i++ ) {
+    for (int i = 3 ; i < this.getColumnCount() ; i++ ) {
       sorter.setComparator(i, numberComparator);
     }
   }
