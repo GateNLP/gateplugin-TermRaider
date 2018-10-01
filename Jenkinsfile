@@ -4,28 +4,35 @@ pipeline {
         upstream(upstreamProjects: "gate-top", threshold: hudson.model.Result.SUCCESS)
     }
     tools { 
-        maven 'Maven 3.3.9' 
+        maven 'Maven Current' 
         jdk 'JDK1.8' 
+    }
+    options {
+        disableConcurrentBuilds()
     }
     stages {
         stage ('Build') {
             steps {
-                sh 'mvn -e clean compile' 
-            }
-        }
-        stage('Document') {
-            when{
-                expression { currentBuild.result != "FAILED" }
-            }
-            steps {
-                sh 'mvn -e site'
+                sh 'mvn -e clean install' 
             }
             post {
                 always {
                     junit 'target/surefire-reports/**/*.xml'
-                    jacoco exclusionPattern: '**/gui/**,**/gate/resources/**'
+                    jacoco exclusionPattern: '**/gate/gui/**,**/gate/resources/**'
+                    warnings canRunOnFailed: true, canResolveRelativePaths: false, consoleParsers: [[parserName: 'Java Compiler (javac)']], defaultEncoding: 'UTF-8', excludePattern: '**/test/**', failedNewAll: '0', unstableNewAll: '0', useStableBuildAsReference: true
+                }
+            }
+        }
+        stage('Document') {
+            when{
+                expression { currentBuild.result != "FAILED" && currentBuild.changeSets != null && currentBuild.changeSets.size() > 0 }
+            }
+            steps {
+                sh 'mvn -e -DskipTests site'
+            }
+            post {
+                always {
                     findbugs canRunOnFailed: true, excludePattern: '**/gate/resources/**', failedNewAll: '0', pattern: '**/findbugsXml.xml', unstableNewAll: '0', useStableBuildAsReference: true
-                    warnings canRunOnFailed: true, consoleParsers: [[parserName: 'Java Compiler (javac)']], defaultEncoding: 'UTF-8', excludePattern: "**/test/**", failedNewAll: '0', unstableNewAll: '0', useStableBuildAsReference: true
                 }
                 success {
                     step([$class: 'JavadocArchiver', javadocDir: 'target/site/apidocs', keepAll: false])
@@ -35,11 +42,11 @@ pipeline {
         stage('Deploy') {
             when{
                 branch 'master'
-                expression { currentBuild.result == "SUCCESS" }
+                expression { currentBuild.result == "SUCCESS" && currentBuild.changeSets != null && currentBuild.changeSets.size() > 0 }
             }
             steps {
                 sh 'mvn -e -Dmaven.test.skip=true source:jar javadoc:jar deploy'
             }
         }
     }
-}
+            }

@@ -13,6 +13,7 @@
 	</parent>
 
 	<name>TermRaider</name>
+	<description>TermRaider is a set of term extraction and scoring tools</description>
 	
 	<!-- this is the description of this plugin -->
 	<groupId>uk.ac.gate.plugins</groupId>
