@@ -144,7 +144,7 @@ eachDocument {
               </entry>
             </localMap>
           </runtimeParams>
-          <resourceType>gate.creole.tokeniser.SimpleTokeniser</resourceType>
+          <resourceType>gate.creole.tokeniser.DefaultTokeniser</resourceType>
           <resourceName>tokenizer</resourceName>
           <initParams class="gate.util.persistence.MapPersistence">
             <mapType>gate.util.SimpleFeatureMapImpl</mapType>
