@@ -1,25 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <gate.util.persistence.GateApplication>
   <urlList class="gate.util.persistence.CollectionPersistence">
     <localList>
       <gate.creole.Plugin-Maven>
         <group>uk.ac.gate.plugins</group>
         <artifact>termraider</artifact>
-        <version>8.5-SNAPSHOT</version>
+        <version>8.6-SNAPSHOT</version>
       </gate.creole.Plugin-Maven>
       <gate.creole.Plugin-Maven>
         <group>uk.ac.gate.plugins</group>
         <artifact>annie</artifact>
-        <version>8.5-SNAPSHOT</version>
+        <version>8.6-SNAPSHOT</version>
       </gate.creole.Plugin-Maven>
       <gate.creole.Plugin-Maven>
         <group>uk.ac.gate.plugins</group>
         <artifact>tools</artifact>
-        <version>8.5-SNAPSHOT</version>
+        <version>8.6-SNAPSHOT</version>
       </gate.creole.Plugin-Maven>
       <gate.creole.Plugin-Maven>
         <group>uk.ac.gate.plugins</group>
         <artifact>groovy</artifact>
-        <version>8.5-SNAPSHOT</version>
+        <version>8.6-SNAPSHOT</version>
       </gate.creole.Plugin-Maven>
     </localList>
     <collectionType>java.util.ArrayList</collectionType>
@@ -43,9 +44,9 @@ eachDocument {
 }
 
 // create the TfIdfTermbank LR
-def termbank0 = Factory.createResource(&quot;gate.termraider.bank.TfIdfTermbank&quot;, [
+def termbank0 = Factory.createResource("gate.termraider.bank.TfIdfTermbank", [
   corpora:[corpus],
-  inputAnnotationTypes:&apos;SingleWord;MultiWord&apos;,
+  inputAnnotationTypes:'SingleWord;MultiWord',
   docFreqSource:null,
   debugMode:true,
 ].toFeatureMap())
@@ -56,20 +57,20 @@ eachDocument {
 }
 
 // create the AugmentedTermbank LR
-def termbank1 = Factory.createResource(&quot;gate.termraider.bank.AnnotationTermbank&quot;, [
+def termbank1 = Factory.createResource("gate.termraider.bank.AnnotationTermbank", [
   corpora:[corpus],
-  inputAnnotationTypes:&apos;SingleWord;MultiWord&apos;,
+  inputAnnotationTypes:'SingleWord;MultiWord',
   debugMode:true,
-  inputScoreFeature:&apos;localAugTfIdf&apos;
+  inputScoreFeature:'localAugTfIdf'
 ].toFeatureMap())
 
 // create the HyponymyTermbank LR
-def termbank2 = Factory.createResource(&quot;gate.termraider.bank.HyponymyTermbank&quot;, [
+def termbank2 = Factory.createResource("gate.termraider.bank.HyponymyTermbank", [
   corpora:[corpus],
-  inputAnnotationTypes:&apos;SingleWord;MultiWord&apos;,
+  inputAnnotationTypes:'SingleWord;MultiWord',
   debugMode:true,
-  inputHeadFeatures:&apos;head;canonical&apos;,
-  inputAnnotationFeature:&apos;canonical&apos;
+  inputHeadFeatures:'head;canonical',
+  inputAnnotationFeature:'canonical'
 ].toFeatureMap())
 
 eachDocument {
@@ -95,15 +96,15 @@ eachDocument {
               </entry>
               <entry>
                 <string>document</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>annotationTypes</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>corpus</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>keepOriginalMarkupsAS</string>
@@ -111,7 +112,7 @@ eachDocument {
               </entry>
               <entry>
                 <string>setsToRemove</string>
-                <null/>
+                <null />
               </entry>
             </localMap>
           </runtimeParams>
@@ -119,11 +120,11 @@ eachDocument {
           <resourceName>docReset</resourceName>
           <initParams class="gate.util.persistence.MapPersistence">
             <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-            <localMap/>
+            <localMap />
           </initParams>
           <features class="gate.util.persistence.MapPersistence">
             <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-            <localMap/>
+            <localMap />
           </features>
         </gate.util.persistence.PRPersistence>
         <gate.util.persistence.LanguageAnalyserPersistence>
@@ -132,15 +133,15 @@ eachDocument {
             <localMap>
               <entry>
                 <string>annotationSetName</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>document</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>corpus</string>
-                <null/>
+                <null />
               </entry>
             </localMap>
           </runtimeParams>
@@ -148,11 +149,11 @@ eachDocument {
           <resourceName>tokenizer</resourceName>
           <initParams class="gate.util.persistence.MapPersistence">
             <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-            <localMap/>
+            <localMap />
           </initParams>
           <features class="gate.util.persistence.MapPersistence">
             <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-            <localMap/>
+            <localMap />
           </features>
         </gate.util.persistence.LanguageAnalyserPersistence>
         <gate.util.persistence.LanguageAnalyserPersistence>
@@ -161,15 +162,15 @@ eachDocument {
             <localMap>
               <entry>
                 <string>outputASName</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>document</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>corpus</string>
-                <null/>
+                <null />
               </entry>
             </localMap>
           </runtimeParams>
@@ -177,11 +178,11 @@ eachDocument {
           <resourceName>splitter</resourceName>
           <initParams class="gate.util.persistence.MapPersistence">
             <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-            <localMap/>
+            <localMap />
           </initParams>
           <features class="gate.util.persistence.MapPersistence">
             <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-            <localMap/>
+            <localMap />
           </features>
         </gate.util.persistence.LanguageAnalyserPersistence>
         <gate.util.persistence.LanguageAnalyserPersistence>
@@ -198,15 +199,15 @@ eachDocument {
               </entry>
               <entry>
                 <string>document</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>corpus</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>annotationSetName</string>
-                <null/>
+                <null />
               </entry>
             </localMap>
           </runtimeParams>
@@ -214,11 +215,11 @@ eachDocument {
           <resourceName>annieGazetteer</resourceName>
           <initParams class="gate.util.persistence.MapPersistence">
             <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-            <localMap/>
+            <localMap />
           </initParams>
           <features class="gate.util.persistence.MapPersistence">
             <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-            <localMap/>
+            <localMap />
           </features>
         </gate.util.persistence.LanguageAnalyserPersistence>
         <gate.util.persistence.LanguageAnalyserPersistence>
@@ -227,11 +228,11 @@ eachDocument {
             <localMap>
               <entry>
                 <string>document</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>corpus</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>outputAnnotationType</string>
@@ -243,11 +244,11 @@ eachDocument {
               </entry>
               <entry>
                 <string>inputASName</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>outputASName</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>baseSentenceAnnotationType</string>
@@ -267,11 +268,11 @@ eachDocument {
           <resourceName>posTagger</resourceName>
           <initParams class="gate.util.persistence.MapPersistence">
             <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-            <localMap/>
+            <localMap />
           </initParams>
           <features class="gate.util.persistence.MapPersistence">
             <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-            <localMap/>
+            <localMap />
           </features>
         </gate.util.persistence.LanguageAnalyserPersistence>
         <gate.util.persistence.PRPersistence>
@@ -280,7 +281,7 @@ eachDocument {
             <localMap>
               <entry>
                 <string>document</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>considerPOSTag</string>
@@ -288,7 +289,7 @@ eachDocument {
               </entry>
               <entry>
                 <string>corpus</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>rootFeatureName</string>
@@ -296,7 +297,7 @@ eachDocument {
               </entry>
               <entry>
                 <string>annotationSetName</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>failOnMissingInputAnnotations</string>
@@ -312,11 +313,11 @@ eachDocument {
           <resourceName>lemmatizer</resourceName>
           <initParams class="gate.util.persistence.MapPersistence">
             <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-            <localMap/>
+            <localMap />
           </initParams>
           <features class="gate.util.persistence.MapPersistence">
             <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-            <localMap/>
+            <localMap />
           </features>
         </gate.util.persistence.PRPersistence>
         <gate.util.persistence.LanguageAnalyserPersistence>
@@ -325,19 +326,19 @@ eachDocument {
             <localMap>
               <entry>
                 <string>outputASName</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>document</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>corpus</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>ontology</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>enableDebugging</string>
@@ -345,7 +346,7 @@ eachDocument {
               </entry>
               <entry>
                 <string>inputASName</string>
-                <null/>
+                <null />
               </entry>
             </localMap>
           </runtimeParams>
@@ -353,11 +354,11 @@ eachDocument {
           <resourceName>annieJape</resourceName>
           <initParams class="gate.util.persistence.MapPersistence">
             <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-            <localMap/>
+            <localMap />
           </initParams>
           <features class="gate.util.persistence.MapPersistence">
             <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-            <localMap/>
+            <localMap />
           </features>
         </gate.util.persistence.LanguageAnalyserPersistence>
         <gate.util.persistence.LanguageAnalyserPersistence>
@@ -366,7 +367,7 @@ eachDocument {
             <localMap>
               <entry>
                 <string>document</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>annotationTypes</string>
@@ -382,11 +383,11 @@ eachDocument {
               </entry>
               <entry>
                 <string>corpus</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>annotationSetName</string>
-                <null/>
+                <null />
               </entry>
             </localMap>
           </runtimeParams>
@@ -394,11 +395,11 @@ eachDocument {
           <resourceName>orthomatcher</resourceName>
           <initParams class="gate.util.persistence.MapPersistence">
             <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-            <localMap/>
+            <localMap />
           </initParams>
           <features class="gate.util.persistence.MapPersistence">
             <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-            <localMap/>
+            <localMap />
           </features>
         </gate.util.persistence.LanguageAnalyserPersistence>
         <gate.util.persistence.LanguageAnalyserPersistence>
@@ -407,15 +408,15 @@ eachDocument {
             <localMap>
               <entry>
                 <string>outputASName</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>document</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>corpus</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>enableDebugging</string>
@@ -423,7 +424,7 @@ eachDocument {
               </entry>
               <entry>
                 <string>inputASName</string>
-                <null/>
+                <null />
               </entry>
             </localMap>
           </runtimeParams>
@@ -444,17 +445,17 @@ eachDocument {
               </entry>
               <entry>
                 <string>annotationAccessors</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>operators</string>
-                <null/>
+                <null />
               </entry>
             </localMap>
           </initParams>
           <features class="gate.util.persistence.MapPersistence">
             <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-            <localMap/>
+            <localMap />
           </features>
         </gate.util.persistence.LanguageAnalyserPersistence>
         <gate.util.persistence.LanguageAnalyserPersistence>
@@ -463,15 +464,15 @@ eachDocument {
             <localMap>
               <entry>
                 <string>outputASName</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>document</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>corpus</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>enableDebugging</string>
@@ -479,7 +480,7 @@ eachDocument {
               </entry>
               <entry>
                 <string>inputASName</string>
-                <null/>
+                <null />
               </entry>
             </localMap>
           </runtimeParams>
@@ -500,17 +501,17 @@ eachDocument {
               </entry>
               <entry>
                 <string>annotationAccessors</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>operators</string>
-                <null/>
+                <null />
               </entry>
             </localMap>
           </initParams>
           <features class="gate.util.persistence.MapPersistence">
             <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-            <localMap/>
+            <localMap />
           </features>
         </gate.util.persistence.LanguageAnalyserPersistence>
         <gate.util.persistence.PRPersistence>
@@ -519,26 +520,26 @@ eachDocument {
             <localMap>
               <entry>
                 <string>outputASName</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>document</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>corpus</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>scriptParams</string>
                 <gate.util.persistence.MapPersistence>
                   <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-                  <localMap/>
+                  <localMap />
                 </gate.util.persistence.MapPersistence>
               </entry>
               <entry>
                 <string>inputASName</string>
-                <null/>
+                <null />
               </entry>
             </localMap>
           </runtimeParams>
@@ -561,7 +562,7 @@ eachDocument {
           </initParams>
           <features class="gate.util.persistence.MapPersistence">
             <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-            <localMap/>
+            <localMap />
           </features>
         </gate.util.persistence.PRPersistence>
         <gate.util.persistence.LanguageAnalyserPersistence>
@@ -570,19 +571,19 @@ eachDocument {
             <localMap>
               <entry>
                 <string>outputASName</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>document</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>corpus</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>ontology</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>enableDebugging</string>
@@ -590,7 +591,7 @@ eachDocument {
               </entry>
               <entry>
                 <string>inputASName</string>
-                <null/>
+                <null />
               </entry>
             </localMap>
           </runtimeParams>
@@ -605,11 +606,11 @@ eachDocument {
               </entry>
               <entry>
                 <string>annotationAccessors</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>operators</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>grammarURL</string>
@@ -619,13 +620,13 @@ eachDocument {
               </entry>
               <entry>
                 <string>binaryGrammarURL</string>
-                <null/>
+                <null />
               </entry>
             </localMap>
           </initParams>
           <features class="gate.util.persistence.MapPersistence">
             <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-            <localMap/>
+            <localMap />
           </features>
         </gate.util.persistence.LanguageAnalyserPersistence>
         <gate.util.persistence.PRPersistence>
@@ -634,19 +635,19 @@ eachDocument {
             <localMap>
               <entry>
                 <string>termbank</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>document</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>corpus</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>annotationSetName</string>
-                <string></string>
+                <string />
               </entry>
             </localMap>
           </runtimeParams>
@@ -654,11 +655,11 @@ eachDocument {
           <resourceName>tfIdfCopier</resourceName>
           <initParams class="gate.util.persistence.MapPersistence">
             <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-            <localMap/>
+            <localMap />
           </initParams>
           <features class="gate.util.persistence.MapPersistence">
             <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-            <localMap/>
+            <localMap />
           </features>
         </gate.util.persistence.PRPersistence>
         <gate.util.persistence.PRPersistence>
@@ -667,19 +668,19 @@ eachDocument {
             <localMap>
               <entry>
                 <string>termbank</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>document</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>corpus</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>annotationSetName</string>
-                <string></string>
+                <string />
               </entry>
             </localMap>
           </runtimeParams>
@@ -687,11 +688,11 @@ eachDocument {
           <resourceName>augTfIdfCopier</resourceName>
           <initParams class="gate.util.persistence.MapPersistence">
             <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-            <localMap/>
+            <localMap />
           </initParams>
           <features class="gate.util.persistence.MapPersistence">
             <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-            <localMap/>
+            <localMap />
           </features>
         </gate.util.persistence.PRPersistence>
         <gate.util.persistence.PRPersistence>
@@ -700,19 +701,19 @@ eachDocument {
             <localMap>
               <entry>
                 <string>termbank</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>document</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>corpus</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>annotationSetName</string>
-                <string></string>
+                <string />
               </entry>
             </localMap>
           </runtimeParams>
@@ -720,11 +721,11 @@ eachDocument {
           <resourceName>kyotoCopier</resourceName>
           <initParams class="gate.util.persistence.MapPersistence">
             <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-            <localMap/>
+            <localMap />
           </initParams>
           <features class="gate.util.persistence.MapPersistence">
             <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-            <localMap/>
+            <localMap />
           </features>
         </gate.util.persistence.PRPersistence>
         <gate.util.persistence.LanguageAnalyserPersistence>
@@ -733,19 +734,19 @@ eachDocument {
             <localMap>
               <entry>
                 <string>outputASName</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>document</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>corpus</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>ontology</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>enableDebugging</string>
@@ -753,7 +754,7 @@ eachDocument {
               </entry>
               <entry>
                 <string>inputASName</string>
-                <null/>
+                <null />
               </entry>
             </localMap>
           </runtimeParams>
@@ -768,11 +769,11 @@ eachDocument {
               </entry>
               <entry>
                 <string>annotationAccessors</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>operators</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>grammarURL</string>
@@ -782,7 +783,7 @@ eachDocument {
               </entry>
               <entry>
                 <string>binaryGrammarURL</string>
-                <null/>
+                <null />
               </entry>
             </localMap>
           </initParams>
@@ -803,7 +804,7 @@ eachDocument {
     <resourceName>TermRaider-English</resourceName>
     <initParams class="gate.util.persistence.MapPersistence">
       <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-      <localMap/>
+      <localMap />
     </initParams>
     <features class="gate.util.persistence.MapPersistence">
       <mapType>gate.util.SimpleFeatureMapImpl</mapType>

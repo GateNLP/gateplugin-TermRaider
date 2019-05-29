@@ -1,30 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <gate.util.persistence.GateApplication>
   <urlList class="gate.util.persistence.CollectionPersistence">
     <localList>
       <gate.creole.Plugin-Maven>
         <group>uk.ac.gate.plugins</group>
         <artifact>termraider</artifact>
-        <version>8.5-SNAPSHOT</version>
+        <version>8.6-SNAPSHOT</version>
       </gate.creole.Plugin-Maven>
       <gate.creole.Plugin-Maven>
         <group>uk.ac.gate.plugins</group>
         <artifact>annie</artifact>
-        <version>8.5-SNAPSHOT</version>
+        <version>8.6-SNAPSHOT</version>
       </gate.creole.Plugin-Maven>
       <gate.creole.Plugin-Maven>
         <group>uk.ac.gate.plugins</group>
         <artifact>tools</artifact>
-        <version>8.5-SNAPSHOT</version>
+        <version>8.6-SNAPSHOT</version>
       </gate.creole.Plugin-Maven>
       <gate.creole.Plugin-Maven>
         <group>uk.ac.gate.plugins</group>
         <artifact>groovy</artifact>
-        <version>8.5-SNAPSHOT</version>
+        <version>8.6-SNAPSHOT</version>
       </gate.creole.Plugin-Maven>
       <gate.creole.Plugin-Maven>
         <group>uk.ac.gate.plugins</group>
         <artifact>tagger-np-chunking</artifact>
-        <version>8.5-SNAPSHOT</version>
+        <version>8.5</version>
       </gate.creole.Plugin-Maven>
     </localList>
     <collectionType>java.util.ArrayList</collectionType>
@@ -51,38 +52,38 @@ eachDocument {
 
 // create the PMIBank LRs
 
-String pmiBankName = &quot;gate.termraider.bank.PMIBank&quot;;
+String pmiBankName = "gate.termraider.bank.PMIBank";
 FeatureMap parameters0 = Factory.newFeatureMap();
 Set&lt;Corpus&gt; corporaSL = Collections.singleton(corpus);
-types0 = [&quot;Noun&quot;, &quot;Verb&quot;];
-parameters0.put(&quot;corpora&quot;, corporaSL);
-parameters0.put(&quot;innerAnnotationTypes&quot;, types0);
-parameters0.put(&quot;inputAnnotationFeature&quot;, &quot;canonical&quot;);
-parameters0.put(&quot;debugMode&quot;, true);
-parameters0.put(&quot;requireTypeDifference&quot;, true);
-parameters0.put(&quot;outerAnnotationWindow&quot;, 1);
+types0 = ["Noun", "Verb"];
+parameters0.put("corpora", corporaSL);
+parameters0.put("innerAnnotationTypes", types0);
+parameters0.put("inputAnnotationFeature", "canonical");
+parameters0.put("debugMode", true);
+parameters0.put("requireTypeDifference", true);
+parameters0.put("outerAnnotationWindow", 1);
 LanguageResource termbank0 = (LanguageResource) Factory.createResource(pmiBankName, parameters0);
-termbank0.setName(&quot;Nouns-Verbs&quot;)
+termbank0.setName("Nouns-Verbs")
 // This one considers Noun-Verb (&amp; Verb-Noun) pairs
 
 
 FeatureMap parameters1 = Factory.newFeatureMap();
 parameters1.putAll(parameters0);
-types1 = [&quot;Noun&quot;, &quot;Verb&quot;, &quot;NamedEntity&quot;]
-parameters1.put(&quot;innerAnnotationTypes&quot;, types1);
-parameters1.put(&quot;requireTypeDifference&quot;, true);
+types1 = ["Noun", "Verb", "NamedEntity"]
+parameters1.put("innerAnnotationTypes", types1);
+parameters1.put("requireTypeDifference", true);
 LanguageResource termbank1 = (LanguageResource) Factory.createResource(pmiBankName, parameters1);
-termbank1.setName(&quot;Nouns-Verbs-NEs&quot;);
+termbank1.setName("Nouns-Verbs-NEs");
 // This one considers Noun-Verb, Noun-NamedEntity, and Verb-NamedEntity pairs (in both orders)
 
 
 FeatureMap parameters2 = Factory.newFeatureMap();
 parameters2.putAll(parameters0);
-types2 = [&quot;SimpleNoun&quot;, &quot;CompoundNoun&quot;, &quot;Verb&quot;, &quot;NamedEntity&quot;]
-parameters2.put(&quot;innerAnnotationTypes&quot;, types2);
-parameters2.put(&quot;requireTypeDifference&quot;, false);
+types2 = ["SimpleNoun", "CompoundNoun", "Verb", "NamedEntity"]
+parameters2.put("innerAnnotationTypes", types2);
+parameters2.put("requireTypeDifference", false);
 LanguageResource termbank2 = (LanguageResource) Factory.createResource(pmiBankName, parameters2);
-termbank2.setName(&quot;MixedBag&quot;);
+termbank2.setName("MixedBag");
 // This one considers all pairs of SimpleNoun, CompoundNoun, Verb, &amp; NamedEntity,
 // including pairs of the same type
 
@@ -104,19 +105,19 @@ termbank2.setName(&quot;MixedBag&quot;);
               </entry>
               <entry>
                 <string>document</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>annotationTypes</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>corpus</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>setsToRemove</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>keepOriginalMarkupsAS</string>
@@ -128,7 +129,7 @@ termbank2.setName(&quot;MixedBag&quot;);
           <resourceName>docReset</resourceName>
           <initParams class="gate.util.persistence.MapPersistence">
             <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-            <localMap/>
+            <localMap />
           </initParams>
           <features class="gate.util.persistence.MapPersistence">
             <mapType>gate.util.SimpleFeatureMapImpl</mapType>
@@ -154,15 +155,15 @@ termbank2.setName(&quot;MixedBag&quot;);
               </entry>
               <entry>
                 <string>document</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>corpus</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>annotationSetName</string>
-                <string></string>
+                <string />
               </entry>
             </localMap>
           </runtimeParams>
@@ -170,7 +171,7 @@ termbank2.setName(&quot;MixedBag&quot;);
           <resourceName>AnnieGazetteer</resourceName>
           <initParams class="gate.util.persistence.MapPersistence">
             <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-            <localMap/>
+            <localMap />
           </initParams>
           <features class="gate.util.persistence.MapPersistence">
             <mapType>gate.util.SimpleFeatureMapImpl</mapType>
@@ -188,15 +189,15 @@ termbank2.setName(&quot;MixedBag&quot;);
             <localMap>
               <entry>
                 <string>annotationSetName</string>
-                <string></string>
+                <string />
               </entry>
               <entry>
                 <string>document</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>corpus</string>
-                <null/>
+                <null />
               </entry>
             </localMap>
           </runtimeParams>
@@ -204,7 +205,7 @@ termbank2.setName(&quot;MixedBag&quot;);
           <resourceName>tokenizer</resourceName>
           <initParams class="gate.util.persistence.MapPersistence">
             <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-            <localMap/>
+            <localMap />
           </initParams>
           <features class="gate.util.persistence.MapPersistence">
             <mapType>gate.util.SimpleFeatureMapImpl</mapType>
@@ -222,19 +223,19 @@ termbank2.setName(&quot;MixedBag&quot;);
             <localMap>
               <entry>
                 <string>outputASName</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>document</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>corpus</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>inputASName</string>
-                <null/>
+                <null />
               </entry>
             </localMap>
           </runtimeParams>
@@ -242,7 +243,7 @@ termbank2.setName(&quot;MixedBag&quot;);
           <resourceName>splitter</resourceName>
           <initParams class="gate.util.persistence.MapPersistence">
             <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-            <localMap/>
+            <localMap />
           </initParams>
           <features class="gate.util.persistence.MapPersistence">
             <mapType>gate.util.SimpleFeatureMapImpl</mapType>
@@ -260,11 +261,11 @@ termbank2.setName(&quot;MixedBag&quot;);
             <localMap>
               <entry>
                 <string>document</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>corpus</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>outputAnnotationType</string>
@@ -276,11 +277,11 @@ termbank2.setName(&quot;MixedBag&quot;);
               </entry>
               <entry>
                 <string>inputASName</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>outputASName</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>baseSentenceAnnotationType</string>
@@ -300,7 +301,7 @@ termbank2.setName(&quot;MixedBag&quot;);
           <resourceName>posTagger</resourceName>
           <initParams class="gate.util.persistence.MapPersistence">
             <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-            <localMap/>
+            <localMap />
           </initParams>
           <features class="gate.util.persistence.MapPersistence">
             <mapType>gate.util.SimpleFeatureMapImpl</mapType>
@@ -318,7 +319,7 @@ termbank2.setName(&quot;MixedBag&quot;);
             <localMap>
               <entry>
                 <string>document</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>considerPOSTag</string>
@@ -326,7 +327,7 @@ termbank2.setName(&quot;MixedBag&quot;);
               </entry>
               <entry>
                 <string>corpus</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>rootFeatureName</string>
@@ -334,7 +335,7 @@ termbank2.setName(&quot;MixedBag&quot;);
               </entry>
               <entry>
                 <string>annotationSetName</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>failOnMissingInputAnnotations</string>
@@ -350,7 +351,7 @@ termbank2.setName(&quot;MixedBag&quot;);
           <resourceName>lemmatizer</resourceName>
           <initParams class="gate.util.persistence.MapPersistence">
             <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-            <localMap/>
+            <localMap />
           </initParams>
           <features class="gate.util.persistence.MapPersistence">
             <mapType>gate.util.SimpleFeatureMapImpl</mapType>
@@ -368,19 +369,19 @@ termbank2.setName(&quot;MixedBag&quot;);
             <localMap>
               <entry>
                 <string>outputASName</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>document</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>corpus</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>inputASName</string>
-                <null/>
+                <null />
               </entry>
             </localMap>
           </runtimeParams>
@@ -388,7 +389,7 @@ termbank2.setName(&quot;MixedBag&quot;);
           <resourceName>AnnieNeTransducer</resourceName>
           <initParams class="gate.util.persistence.MapPersistence">
             <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-            <localMap/>
+            <localMap />
           </initParams>
           <features class="gate.util.persistence.MapPersistence">
             <mapType>gate.util.SimpleFeatureMapImpl</mapType>
@@ -406,7 +407,7 @@ termbank2.setName(&quot;MixedBag&quot;);
             <localMap>
               <entry>
                 <string>document</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>annotationTypes</string>
@@ -422,11 +423,11 @@ termbank2.setName(&quot;MixedBag&quot;);
               </entry>
               <entry>
                 <string>corpus</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>annotationSetName</string>
-                <null/>
+                <null />
               </entry>
             </localMap>
           </runtimeParams>
@@ -434,11 +435,11 @@ termbank2.setName(&quot;MixedBag&quot;);
           <resourceName>OrthoMatcher</resourceName>
           <initParams class="gate.util.persistence.MapPersistence">
             <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-            <localMap/>
+            <localMap />
           </initParams>
           <features class="gate.util.persistence.MapPersistence">
             <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-            <localMap/>
+            <localMap />
           </features>
         </gate.util.persistence.LanguageAnalyserPersistence>
         <gate.util.persistence.LanguageAnalyserPersistence>
@@ -447,23 +448,23 @@ termbank2.setName(&quot;MixedBag&quot;);
             <localMap>
               <entry>
                 <string>outputASName</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>document</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>corpus</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>ontology</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>inputASName</string>
-                <null/>
+                <null />
               </entry>
             </localMap>
           </runtimeParams>
@@ -478,11 +479,11 @@ termbank2.setName(&quot;MixedBag&quot;);
               </entry>
               <entry>
                 <string>annotationAccessors</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>operators</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>grammarURL</string>
@@ -492,13 +493,13 @@ termbank2.setName(&quot;MixedBag&quot;);
               </entry>
               <entry>
                 <string>binaryGrammarURL</string>
-                <null/>
+                <null />
               </entry>
             </localMap>
           </initParams>
           <features class="gate.util.persistence.MapPersistence">
             <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-            <localMap/>
+            <localMap />
           </features>
         </gate.util.persistence.LanguageAnalyserPersistence>
         <gate.util.persistence.PRPersistence>
@@ -507,23 +508,23 @@ termbank2.setName(&quot;MixedBag&quot;);
             <localMap>
               <entry>
                 <string>outputASName</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>document</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>corpus</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>scriptParams</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>inputASName</string>
-                <null/>
+                <null />
               </entry>
             </localMap>
           </runtimeParams>
@@ -546,7 +547,7 @@ termbank2.setName(&quot;MixedBag&quot;);
           </initParams>
           <features class="gate.util.persistence.MapPersistence">
             <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-            <localMap/>
+            <localMap />
           </features>
         </gate.util.persistence.PRPersistence>
         <gate.util.persistence.LanguageAnalyserPersistence>
@@ -555,23 +556,23 @@ termbank2.setName(&quot;MixedBag&quot;);
             <localMap>
               <entry>
                 <string>outputASName</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>document</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>corpus</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>ontology</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>inputASName</string>
-                <null/>
+                <null />
               </entry>
             </localMap>
           </runtimeParams>
@@ -586,11 +587,11 @@ termbank2.setName(&quot;MixedBag&quot;);
               </entry>
               <entry>
                 <string>annotationAccessors</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>operators</string>
-                <null/>
+                <null />
               </entry>
               <entry>
                 <string>grammarURL</string>
@@ -600,13 +601,13 @@ termbank2.setName(&quot;MixedBag&quot;);
               </entry>
               <entry>
                 <string>binaryGrammarURL</string>
-                <null/>
+                <null />
               </entry>
             </localMap>
           </initParams>
           <features class="gate.util.persistence.MapPersistence">
             <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-            <localMap/>
+            <localMap />
           </features>
         </gate.util.persistence.LanguageAnalyserPersistence>
       </localList>
@@ -616,14 +617,14 @@ termbank2.setName(&quot;MixedBag&quot;);
     <resourceName>PMI-Example</resourceName>
     <initParams class="gate.util.persistence.MapPersistence">
       <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-      <localMap/>
+      <localMap />
     </initParams>
     <features class="gate.util.persistence.MapPersistence">
       <mapType>gate.util.SimpleFeatureMapImpl</mapType>
       <localMap>
         <entry>
-          <string></string>
-          <string></string>
+          <string />
+          <string />
         </entry>
       </localMap>
     </features>
