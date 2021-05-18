@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2010--2014, The University of Sheffield. See the file
+ *  Copyright (c) 2010--2021, The University of Sheffield. See the file
  *  COPYRIGHT.txt in the software or at http://gate.ac.uk/gate/COPYRIGHT.txt
  *
  *  This file is part of GATE (see http://gate.ac.uk/), and is free
@@ -12,10 +12,8 @@
 package gate.termraider.output;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 
 import com.opencsv.CSVWriterBuilder;
@@ -72,16 +70,5 @@ public class CsvGenerator {
     if (termbank.getDebugMode()) {
       System.out.println(commentStr);
     }
-  }
-  
-  
-  private static PrintWriter initializeWriter(File outputFile) throws GateException {
-    try {
-      return new PrintWriter(outputFile);
-    } 
-    catch(FileNotFoundException e) {
-      throw new GateException(e);
-    }
-  }
-  
+  }  
 }
