@@ -51,6 +51,13 @@
 	<dependencies>
 		<!-- add any other libraries your plugin depends on. Any other GATE plugins 
 			you depend on at compile time should use the provided scope -->
+			
+		<dependency>
+			<groupId>com.opencsv</groupId>
+			<artifactId>opencsv</artifactId>
+			<version>5.4</version>
+		</dependency>
+		
 	</dependencies>
 
 </project>

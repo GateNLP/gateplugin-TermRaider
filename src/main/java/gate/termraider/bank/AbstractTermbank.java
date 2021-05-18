@@ -37,6 +37,8 @@ import java.util.TreeSet;
 import javax.swing.Action;
 import org.apache.commons.lang.StringEscapeUtils;
 
+import com.opencsv.ICSVWriter;
+
 
 
 public abstract class AbstractTermbank extends AbstractBank 
@@ -278,46 +280,48 @@ public abstract class AbstractTermbank extends AbstractBank
     return this.actionsList;
   }
 
-  
-  public String getCsvHeader() {
-    StringBuilder sb = new StringBuilder();
-    sb.append(StringEscapeUtils.escapeCsv("Term"));
-    sb.append(',').append(StringEscapeUtils.escapeCsv("Lang"));
-    sb.append(',').append(StringEscapeUtils.escapeCsv("Type"));
+  public void writeCSVHeader(ICSVWriter csvWriter) {
+    List<String> row = new ArrayList<String>();
+	  
+    row.add("Term");
+    row.add("Lang");
+    row.add("Type");
+    
     for (ScoreType type : this.scoreTypes) {
-      sb.append(',').append(StringEscapeUtils.escapeCsv(type.toString()));
+    	row.add(type.toString());
     }
-    sb.append(getCsvSubheader());
-    return sb.toString();
+    
+    csvWriter.writeNext(row.toArray(new String[row.size()]),false);
+    
+    writeCSVSubHeader(csvWriter);
   }
-  
-  
+
   /**
    * TODO: This is not right (columns).
    * Should be overridden as necessary, for totals etc.
-   * Must start with a newline.
-   * @return the assembled CSV snipper
    */
-  protected String getCsvSubheader() {
-    StringBuilder sb = new StringBuilder();
-    sb.append('\n');
-    sb.append(',').append(StringEscapeUtils.escapeCsv("_TOTAL_DOCS_"));
-    sb.append(',').append(StringEscapeUtils.escapeCsv(""));
-    sb.append(',').append(StringEscapeUtils.escapeCsv(""));
-    sb.append(',').append(StringEscapeUtils.escapeCsv(Integer.toString(this.getDocumentCount())));
-    return sb.toString();
+  protected void writeCSVSubHeader(ICSVWriter csvWriter) {
+	  
+	String[] row = new String[] {"","","","",""};
+	row[1] = "_TOTAL_DOCS_";
+	row[4] = Integer.toString(this.getDocumentCount());
+	
+	csvWriter.writeNext(row,false);
   }
 
-
-  public String getCsvLine(Term term) {
-      StringBuilder sb = new StringBuilder();
-      sb.append(StringEscapeUtils.escapeCsv(term.getTermString()));
-      sb.append(',').append(StringEscapeUtils.escapeCsv(term.getLanguageCode()));
-      sb.append(',').append(StringEscapeUtils.escapeCsv(term.getType()));
-      for (ScoreType type : this.scoreTypes) {
-        sb.append(',').append(StringEscapeUtils.escapeCsv(this.getScore(type, term).toString()));
-      }
-      return sb.toString();
+  public void writeCSVTermData(ICSVWriter csvWriter, Term term) {
+	  
+	  List<String> row = new ArrayList<String>();
+	  
+	  row.add(term.getTermString());
+	  row.add(term.getLanguageCode());
+	  row.add(term.getType());
+	  
+	  for (ScoreType type : this.scoreTypes) {
+		  row.add(this.getScore(type, term).toString());
+	  }
+	  
+	  csvWriter.writeNext(row.toArray(new String[row.size()]),false);
   }
 
   @CreoleParameter(comment = "input annotation types",

@@ -33,6 +33,8 @@ import java.util.Set;
 import javax.swing.Action;
 import org.apache.commons.lang.StringEscapeUtils;
 
+import com.opencsv.ICSVWriter;
+
 
 @CreoleResource(name = "DocumentFrequencyBank",
 icon = "termbank-lr.png",
@@ -283,16 +285,5 @@ implements ActionsPublisher{
     result.put("nbr of terms", String.valueOf(this.getDefaultScores().size()));
     result.put("nbr of distinct term strings", String.valueOf(this.stringLookupTable.size()));
     return result;
-  }
-
-
-  public String getCsvSubheader() {
-    StringBuilder sb = new StringBuilder();
-    sb.append('\n');
-    sb.append(',').append(StringEscapeUtils.escapeCsv("_TOTAL_DOCS_"));
-    sb.append(',').append(StringEscapeUtils.escapeCsv(""));
-    sb.append(',').append(StringEscapeUtils.escapeCsv(""));
-    sb.append(',').append(StringEscapeUtils.escapeCsv(Integer.toString(this.getDocumentCount())));
-    return sb.toString();
   }
 }

@@ -11,41 +11,64 @@
  */
 package gate.termraider.output;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.List;
+
+import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
+import com.opencsv.CSVWriterBuilder;
+import com.opencsv.ICSVWriter;
+import com.opencsv.RFC4180Parser;
+import com.opencsv.RFC4180ParserBuilder;
+import com.opencsv.enums.CSVReaderNullFieldIndicator;
+
 import gate.termraider.bank.AbstractBank;
 import gate.termraider.bank.AbstractTermbank;
 import gate.termraider.util.Term;
 import gate.util.GateException;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
-import java.util.List;
 
 
 public class CsvGenerator {
   
   public static void generateAndSaveCsv(AbstractTermbank bank, 
           Number threshold, File outputFile) throws GateException {
-    PrintWriter writer = initializeWriter(outputFile);
-    addComment(bank, "threshold = " + threshold);
-    List<Term> sortedTerms = bank.getTermsByDescendingScore();
+        
+    RFC4180Parser parser = new RFC4180ParserBuilder()
+        .withSeparator((char) ',')
+        .withQuoteChar((char) '"')
+        .build();
+
+    try (ICSVWriter csvWriter = new CSVWriterBuilder(new FileWriter(outputFile))
+        .withParser(parser)
+	    .withLineEnd(ICSVWriter.RFC4180_LINE_END)
+	    .build();) {
+
+        addComment(bank, "threshold = " + threshold);
+        List<Term> sortedTerms = bank.getTermsByDescendingScore();
     
-    addComment(bank, "Unfiltered nbr of terms = " + sortedTerms.size());
-    int written = 0;
-    writer.println(bank.getCsvHeader());
+        addComment(bank, "Unfiltered nbr of terms = " + sortedTerms.size());
+        int written = 0;
+        bank.writeCSVHeader(csvWriter);
     
-    for (Term term : sortedTerms) {
-      Number score = bank.getDefaultScores().get(term);
-      if (score.doubleValue() >= threshold.doubleValue()) {
-        writer.println(bank.getCsvLine(term));
-        written++;
-      }
-      else {  // the rest must be lower
-        break;
-      }
-    }
-    addComment(bank, "Filtered nbr of terms = " + written);
-    
-    writer.flush();
+        for (Term term : sortedTerms) {
+            Number score = bank.getDefaultScores().get(term);
+            if (score.doubleValue() >= threshold.doubleValue()) {
+            	bank.writeCSVTermData(csvWriter, term);
+                written++;
+            }
+            else {  // the rest must be lower
+                break;
+            }
+        }
+        addComment(bank, "Filtered nbr of terms = " + written);
+    } catch (IOException e) {
+		throw new GateException(e);
+	}
   }
 
   
