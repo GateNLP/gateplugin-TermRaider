@@ -13,19 +13,15 @@ package gate.termraider.output;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
-import com.opencsv.CSVReader;
-import com.opencsv.CSVReaderBuilder;
 import com.opencsv.CSVWriterBuilder;
 import com.opencsv.ICSVWriter;
 import com.opencsv.RFC4180Parser;
 import com.opencsv.RFC4180ParserBuilder;
-import com.opencsv.enums.CSVReaderNullFieldIndicator;
 
 import gate.termraider.bank.AbstractBank;
 import gate.termraider.bank.AbstractTermbank;
