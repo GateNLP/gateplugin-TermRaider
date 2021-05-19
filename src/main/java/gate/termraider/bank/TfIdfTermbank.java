@@ -24,6 +24,7 @@ import gate.gui.ActionsPublisher;
 import gate.termraider.modes.IdfCalculation;
 import gate.termraider.modes.Normalization;
 import gate.termraider.modes.TfCalculation;
+import gate.termraider.util.DocumentIdentifier;
 import gate.termraider.util.ScoreType;
 import gate.termraider.util.Term;
 import gate.termraider.util.Utilities;
@@ -57,7 +58,7 @@ public class TfIdfTermbank extends AbstractTermbank
   
   protected void processDocument(Document document, int index) {
     documentCount++;
-    String documentSource = Utilities.docIdentifier(document, idDocumentFeature, index);
+    DocumentIdentifier documentSource = Utilities.docIdentifier(document, idDocumentFeature, index);
     AnnotationSet candidates = document.getAnnotations(inputASName).get(inputAnnotationTypes);
 
     for (Annotation candidate : candidates) {
@@ -106,7 +107,7 @@ public class TfIdfTermbank extends AbstractTermbank
   
   
   protected void resetScores() {
-    termDocuments = new HashMap<Term, Set<String>>();
+    termDocuments = new HashMap<Term, Set<DocumentIdentifier>>();
     documentCount = 0;
     scores = new HashMap<ScoreType, Map<Term,Number>>();
     for (ScoreType st : scoreTypes) {

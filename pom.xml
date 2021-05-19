@@ -8,17 +8,17 @@
 		<groupId>uk.ac.gate</groupId>
 		<artifactId>gate-plugin-base</artifactId>
 		<!-- this should be the version of GATE you wish to build against -->
-		<version>8.6-SNAPSHOT</version>
+		<version>8.6</version>
 		<relativePath/>
 	</parent>
-
+	
 	<name>TermRaider</name>
 	<description>TermRaider is a set of term extraction and scoring tools</description>
 	
 	<!-- this is the description of this plugin -->
 	<groupId>uk.ac.gate.plugins</groupId>
 	<artifactId>termraider</artifactId>
-	<version>8.7-SNAPSHOT</version>
+	<version>9.0-SNAPSHOT</version>
 
 	<licenses>
 		<license>

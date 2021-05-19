@@ -19,6 +19,7 @@ import gate.creole.ResourceInstantiationException;
 import gate.gui.ActionsPublisher;
 import gate.termraider.gui.ActionSaveCsv;
 import gate.termraider.output.PairCsvGenerator;
+import gate.termraider.util.DocumentIdentifier;
 import gate.termraider.util.UnorderedTermPair;
 import gate.util.GateException;
 import java.io.File;
@@ -41,7 +42,7 @@ public abstract class AbstractPairbank extends AbstractBank
   protected transient List<Action> actionsList;
   
   protected Map<UnorderedTermPair, Double> scores;
-  protected Map<UnorderedTermPair, Set<String>> documents;
+  protected Map<UnorderedTermPair, Set<DocumentIdentifier>> documents;
   protected Map<UnorderedTermPair, Integer> pairCount;
 
 
@@ -67,7 +68,7 @@ public abstract class AbstractPairbank extends AbstractBank
     return this.scores;
   }
   
-  public Map<UnorderedTermPair, Set<String>> getDocuments() {
+  public Map<UnorderedTermPair, Set<DocumentIdentifier>> getDocuments() {
     return this.documents;
   }
   
@@ -157,7 +158,7 @@ public abstract class AbstractPairbank extends AbstractBank
   
   
   protected void resetScores() {
-    this.documents = new HashMap<UnorderedTermPair, Set<String>>();
+    this.documents = new HashMap<UnorderedTermPair, Set<DocumentIdentifier>>();
     this.scores = new HashMap<UnorderedTermPair, Double>();
     this.pairCount = new HashMap<UnorderedTermPair, Integer>();
     resetImplScores();
@@ -187,8 +188,8 @@ public abstract class AbstractPairbank extends AbstractBank
   
   
   /* Methods for saving as CSV */
-  
-  public void saveAsCsv(Number threshold, File outputFile) throws GateException {
+  @Override
+  public void saveAsCsv(Number threshold, File outputFile, boolean documentDetails) throws GateException {
     PairCsvGenerator generator = new PairCsvGenerator();
     generator.generateAndSaveCsv(this, threshold, outputFile);
   }
@@ -198,7 +199,8 @@ public abstract class AbstractPairbank extends AbstractBank
    * @param outputFile the file to save the termbank into
    * @throws GateException if an error occurs saving the termbank
    */
-  public void saveAsCsv(File outputFile) throws GateException {
+  @Override
+  public void saveAsCsv(File outputFile, boolean documentDetails) throws GateException {
     PairCsvGenerator generator = new PairCsvGenerator();
     generator.generateAndSaveCsv(this, -100.0F, outputFile);
   }

@@ -17,6 +17,8 @@ import gate.util.GateException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+
+import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 
@@ -28,15 +30,17 @@ public class CsvFileSelectionActionListener implements ActionListener {
   private JFileChooser chooser;
   private AbstractBank termbank;
   private SliderPanel sliderPanel;
+  private JCheckBox cbDocuments;
   private JDialog dialog;
   private Mode mode;
   
-  public CsvFileSelectionActionListener(JFileChooser chooser, AbstractBank termbank, SliderPanel sliderPanel, JDialog dialog, Mode mode) {
+  public CsvFileSelectionActionListener(JFileChooser chooser, AbstractBank termbank, SliderPanel sliderPanel, JCheckBox cbDocuments, JDialog dialog, Mode mode) {
     this.chooser = chooser;
     this.termbank = termbank;
     this.sliderPanel = sliderPanel;
     this.dialog = dialog;
     this.mode = mode;
+    this.cbDocuments = cbDocuments;
   }
   
   @Override
@@ -46,7 +50,7 @@ public class CsvFileSelectionActionListener implements ActionListener {
               Utilities.EXTENSION_CSV);
       try {
         if (mode == Mode.SAVE) {
-          termbank.saveAsCsv(sliderPanel.getValue(), file);
+          termbank.saveAsCsv(sliderPanel.getValue(), file, cbDocuments.isSelected());
         }
         else { // must be LOAD
           System.err.println("LOAD mode is no longer supported.");

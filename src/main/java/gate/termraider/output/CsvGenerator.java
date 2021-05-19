@@ -30,11 +30,11 @@ import gate.util.GateException;
 public class CsvGenerator {
   
   public static void generateAndSaveCsv(AbstractTermbank bank, 
-          Number threshold, File outputFile) throws GateException {
+          Number threshold, File outputFile, boolean documentDetails) throws GateException {
         
     RFC4180Parser parser = new RFC4180ParserBuilder()
-        .withSeparator((char) ',')
-        .withQuoteChar((char) '"')
+        .withSeparator(',')
+        .withQuoteChar('"')
         .build();
 
     try (ICSVWriter csvWriter = new CSVWriterBuilder(new FileWriter(outputFile))
@@ -47,12 +47,15 @@ public class CsvGenerator {
     
         addComment(bank, "Unfiltered nbr of terms = " + sortedTerms.size());
         int written = 0;
-        bank.writeCSVHeader(csvWriter);
+        bank.writeCSVHeader(csvWriter, documentDetails);
     
         for (Term term : sortedTerms) {
             Number score = bank.getDefaultScores().get(term);
             if (score.doubleValue() >= threshold.doubleValue()) {
-            	bank.writeCSVTermData(csvWriter, term);
+            	if (documentDetails)
+            		bank.writeCSVTermDocumentData(csvWriter, term);
+            	else
+            		bank.writeCSVTermData(csvWriter, term);
                 written++;
             }
             else {  // the rest must be lower

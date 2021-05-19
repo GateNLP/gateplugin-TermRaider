@@ -11,6 +11,13 @@
  */
 package gate.termraider.bank;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import gate.Annotation;
 import gate.AnnotationSet;
 import gate.Document;
@@ -20,15 +27,10 @@ import gate.creole.metadata.CreoleParameter;
 import gate.creole.metadata.CreoleResource;
 import gate.gui.ActionsPublisher;
 import gate.termraider.modes.Normalization;
+import gate.termraider.util.DocumentIdentifier;
 import gate.termraider.util.ScoreType;
 import gate.termraider.util.Term;
 import gate.termraider.util.Utilities;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 
 
@@ -75,7 +77,7 @@ public class HyponymyTermbank extends AbstractTermbank
   
   protected void processDocument(Document document, int index) {
     documentCount++;
-    String documentSource = Utilities.docIdentifier(document, idDocumentFeature, index);
+    DocumentIdentifier documentSource = Utilities.docIdentifier(document, idDocumentFeature, index);
     AnnotationSet candidates = document.getAnnotations(inputASName).get(inputAnnotationTypes);
     
     for (Annotation candidate : candidates) {
@@ -100,16 +102,17 @@ public class HyponymyTermbank extends AbstractTermbank
   
   
   public void calculateScores() {
-    Set<Term> terms = termHeads.keySet();
     Set<String> headsI, headsJ;
     
-    for (Term termI : terms) {
-      headsI = termHeads.get(termI);
-      
-      for (Term termJ : terms) {
+    for (Map.Entry<Term, Set<String>> entryI : termHeads.entrySet()) {
+      Term termI = entryI.getKey();
+      headsI = entryI.getValue();
+
+      for (Map.Entry<Term, Set<String>> entryJ : termHeads.entrySet()) {
+    	Term termJ = entryJ.getKey();
         if (termJ.getTermString().contains(termI.getTermString())
                 && (! termI.equals(termJ))) {
-          headsJ = termHeads.get(termJ);
+          headsJ = entryJ.getValue();
           
           hyponymLoop:
             for (String headI : headsI) {
@@ -124,7 +127,7 @@ public class HyponymyTermbank extends AbstractTermbank
       }
     }
     
-    for (Term term : terms) {
+    for (Term term : termHeads.keySet()) {
       this.languages.add(term.getLanguageCode());
       this.types.add(term.getType());
       
@@ -149,7 +152,7 @@ public class HyponymyTermbank extends AbstractTermbank
     }
     termHeads       = new HashMap<Term, Set<String>>();
     termHyponyms    = new HashMap<Term, Set<String>>();
-    termDocuments   = new HashMap<Term, Set<String>>();
+    termDocuments   = new HashMap<Term, Set<DocumentIdentifier>>();
     languages = new HashSet<String>();
     types = new HashSet<String>();
   }

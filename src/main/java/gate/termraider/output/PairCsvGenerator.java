@@ -38,7 +38,10 @@ public class PairCsvGenerator {
 
 		this.debugMode = pairbank.getDebugMode();
 
-		RFC4180Parser parser = new RFC4180ParserBuilder().withSeparator((char) ',').withQuoteChar((char) '"').build();
+		RFC4180Parser parser = new RFC4180ParserBuilder()
+				.withSeparator(',')
+				.withQuoteChar('"')
+				.build();
 
 		try (ICSVWriter csvWriter = new CSVWriterBuilder(new FileWriter(outputFile))
 				.withParser(parser)
@@ -58,7 +61,8 @@ public class PairCsvGenerator {
 					break;
 				}
 				written++;
-				writeContent(csvWriter, pair.getTerm0(), pair.getTerm1(), score, pairbank.getDocumentCount(pair),
+				
+				writePairData(csvWriter, pair.getTerm0(), pair.getTerm1(), score, pairbank.getDocumentCount(pair),
 						pairbank.getPairCount(pair));
 			}
 
@@ -76,8 +80,8 @@ public class PairCsvGenerator {
 			System.err.println(commentStr);
 		}
 	}
-
-	private void writeContent(ICSVWriter writer, Term t0, Term t1, Double score, Integer documents, Integer frequency) {
+	
+	private void writePairData(ICSVWriter writer, Term t0, Term t1, Double score, Integer documents, Integer frequency) {
 
 		String[] row = new String[9];
 

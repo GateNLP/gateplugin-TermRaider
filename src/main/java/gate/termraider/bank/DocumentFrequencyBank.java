@@ -11,6 +11,12 @@
  */
 package gate.termraider.bank;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 import gate.Annotation;
 import gate.AnnotationSet;
 import gate.Corpus;
@@ -20,20 +26,10 @@ import gate.creole.ResourceInstantiationException;
 import gate.creole.metadata.CreoleParameter;
 import gate.creole.metadata.CreoleResource;
 import gate.gui.ActionsPublisher;
-import gate.termraider.gui.ActionSaveCsv;
+import gate.termraider.util.DocumentIdentifier;
 import gate.termraider.util.ScoreType;
 import gate.termraider.util.Term;
 import gate.termraider.util.Utilities;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import javax.swing.Action;
-import org.apache.commons.lang.StringEscapeUtils;
-
-import com.opencsv.ICSVWriter;
 
 
 @CreoleResource(name = "DocumentFrequencyBank",
@@ -49,14 +45,9 @@ implements ActionsPublisher{
   private Set<DocumentFrequencyBank> inputBanks;
   
   private Map<String, Set<Term>> stringLookupTable;
-
-  // transient to allow serialization
-  protected transient List<Action> actionsList;
   
   /* CREOLE */
   protected String segmentAnnotationType; 
-  
-  
   
   @CreoleParameter(comment = "input segment annotations (default = whole documents)",
           defaultValue = "")
@@ -66,8 +57,6 @@ implements ActionsPublisher{
   public String getSegmentAnnotationType() {
     return this.segmentAnnotationType;
   }
-
-
 
   public Resource init() throws ResourceInstantiationException {
     prepare();
@@ -106,25 +95,8 @@ implements ActionsPublisher{
     languages = new HashSet<String>();
     types = new HashSet<String>();
     stringLookupTable = new HashMap<String, Set<Term>>();
-    termDocuments = new HashMap<Term, Set<String>>();
-  }
-
-  
-  protected void createActions() {
-    actionsList = new ArrayList<Action>();
-    actionsList.add(new ActionSaveCsv("Save as CSV...", this));
-  }
-  
-  
-  protected void processCorpora() {
-    for (Corpus corpus : corpora) {
-      processCorpus(corpus);
-      if (debugMode) {
-        System.out.println("Termbank: added corpus " + corpus.getName() + " with " + corpus.size() + " documents");
-      }
-    }
-  }
-  
+    termDocuments = new HashMap<Term, Set<DocumentIdentifier>>();
+  }  
   
   protected void processInputBanks() {
     for (DocumentFrequencyBank bank : inputBanks) {
@@ -147,13 +119,13 @@ implements ActionsPublisher{
 
   
   protected void processDocumentSegments(Document document, int index) {
-    String documentSource = Utilities.docIdentifier(document, idDocumentFeature, index);
+    DocumentIdentifier documentSource = Utilities.docIdentifier(document, idDocumentFeature, index);
     AnnotationSet segments = document.getAnnotations(inputASName).get(segmentAnnotationType);
     AnnotationSet candidates = document.getAnnotations(inputASName).get(inputAnnotationTypes);
 
     for (Annotation segment : segments) {
       documentCount++;
-      String documentSegmentSource = String.format("%s [%d]", documentSource, segment.getId());
+      DocumentIdentifier documentSegmentSource = new DocumentIdentifier(documentSource.toString(), segment.getId());
       AnnotationSet localCandidates = gate.Utils.getContainedAnnotations(candidates, segment);
 
       Set<Term> documentTerms = new HashSet<Term>();
@@ -170,7 +142,7 @@ implements ActionsPublisher{
   
   protected void processWholeDocument(Document document, int index) {
     documentCount++;
-    String documentSource = Utilities.docIdentifier(document, idDocumentFeature, index);
+    DocumentIdentifier documentSource = Utilities.docIdentifier(document, idDocumentFeature, index);
     AnnotationSet candidates = document.getAnnotations(inputASName).get(inputAnnotationTypes);
 
     Set<Term> documentTerms = new HashSet<Term>();
@@ -185,10 +157,11 @@ implements ActionsPublisher{
 
   
   protected void calculateScores() {
-    for (Term term : termDocuments.keySet()) {
+	for (Map.Entry<Term, Set<DocumentIdentifier>> entry : termDocuments.entrySet()) {
+	  Term term = entry.getKey();
       this.types.add(term.getType());
       this.languages.add(term.getLanguageCode());
-      int df = termDocuments.get(term).size();
+      int df = entry.getValue().size();
       Utilities.setScoreTermValue(scores, getDefaultScoreType(), term, df);
       storeStringLookup(term);
     }
@@ -236,18 +209,6 @@ implements ActionsPublisher{
   public Set<DocumentFrequencyBank> getInputBanks() {
     return this.inputBanks;
   }
-
-
-  @Override
-  public List<Action> getActions() {
-    // lazy instantiation because actionsList is transient
-    if (actionsList == null) {
-      createActions();
-    }
-    
-    return this.actionsList;
-  }
-
 
   private void storeStringLookup(Term term) {
     String termString = term.getTermString();

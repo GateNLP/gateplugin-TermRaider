@@ -43,10 +43,10 @@ public abstract class AbstractBank extends AbstractLanguageResource {
     return this.documentCount;
   }
   
-  public abstract void saveAsCsv(Number threshold, File file)
+  public abstract void saveAsCsv(Number threshold, File file, boolean documentDetail)
     throws GateException;
 
-  public abstract void saveAsCsv(File file)
+  public abstract void saveAsCsv(File file, boolean documentDetails)
     throws GateException;
   
   public Set<String> getLanguages() {

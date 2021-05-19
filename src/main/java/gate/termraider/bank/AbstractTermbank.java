@@ -11,19 +11,6 @@
  */
 package gate.termraider.bank;
 
-import gate.Corpus;
-import gate.Document;
-import gate.Factory;
-import gate.Resource;
-import gate.creole.ResourceInstantiationException;
-import gate.creole.metadata.CreoleParameter;
-import gate.gui.ActionsPublisher;
-import gate.termraider.gui.ActionSaveCsv;
-import gate.termraider.output.CsvGenerator;
-import gate.termraider.util.ScoreType;
-import gate.termraider.util.Term;
-import gate.termraider.util.TermComparatorByDescendingScore;
-import gate.util.GateException;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -34,10 +21,25 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+
 import javax.swing.Action;
-import org.apache.commons.lang.StringEscapeUtils;
 
 import com.opencsv.ICSVWriter;
+
+import gate.Corpus;
+import gate.Document;
+import gate.Factory;
+import gate.Resource;
+import gate.creole.ResourceInstantiationException;
+import gate.creole.metadata.CreoleParameter;
+import gate.gui.ActionsPublisher;
+import gate.termraider.gui.ActionSaveCsv;
+import gate.termraider.output.CsvGenerator;
+import gate.termraider.util.DocumentIdentifier;
+import gate.termraider.util.ScoreType;
+import gate.termraider.util.Term;
+import gate.termraider.util.TermComparatorByDescendingScore;
+import gate.util.GateException;
 
 
 
@@ -54,7 +56,7 @@ public abstract class AbstractTermbank extends AbstractBank
   protected transient List<Action> actionsList;
   
   protected Map<ScoreType, Map<Term, Number>> scores;
-  protected Map<Term, Set<String>>  termDocuments;
+  protected Map<Term, Set<DocumentIdentifier>>  termDocuments;
   public static final String RAW_SUFFIX = ".raw";
   
   private List<Term> termsByDescendingScore;
@@ -129,7 +131,7 @@ public abstract class AbstractTermbank extends AbstractBank
   }
   
 
-  public Map<Term, Set<String>> getTermDocuments() {
+  public Map<Term, Set<DocumentIdentifier>> getTermDocuments() {
     return this.termDocuments;
   }
   
@@ -148,13 +150,13 @@ public abstract class AbstractTermbank extends AbstractBank
   }
   
   
-  public Set<String> getDocumentsForTerm(Term term) {
+  public Set<DocumentIdentifier> getDocumentsForTerm(Term term) {
     if (this.termDocuments.containsKey(term)) {
       return this.termDocuments.get(term);
     }
     
     // implied else: empty set
-    return new HashSet<String>();
+    return new HashSet<DocumentIdentifier>();
   }
   
   
@@ -256,8 +258,8 @@ public abstract class AbstractTermbank extends AbstractBank
   
   /* Methods for saving as CSV */
   
-  public void saveAsCsv(Number threshold, File outputFile) throws GateException {
-    CsvGenerator.generateAndSaveCsv(this, threshold, outputFile);
+  public void saveAsCsv(Number threshold, File outputFile, boolean documentDetails) throws GateException {
+    CsvGenerator.generateAndSaveCsv(this, threshold, outputFile, documentDetails);
   }
 
   /**
@@ -265,8 +267,8 @@ public abstract class AbstractTermbank extends AbstractBank
    * @param outputFile the file to save the termbank into
    * @throws GateException if an error occurs saving the termbank
    */
-  public void saveAsCsv(File outputFile) throws GateException {
-    saveAsCsv(this.getMinScore(), outputFile);
+  public void saveAsCsv(File outputFile, boolean documentDetails) throws GateException {
+    saveAsCsv(this.getMinScore(), outputFile, documentDetails);
   }
   
   
@@ -280,7 +282,7 @@ public abstract class AbstractTermbank extends AbstractBank
     return this.actionsList;
   }
 
-  public void writeCSVHeader(ICSVWriter csvWriter) {
+  public void writeCSVHeader(ICSVWriter csvWriter, boolean documentDetails) {
     List<String> row = new ArrayList<String>();
 	  
     row.add("Term");
@@ -288,7 +290,12 @@ public abstract class AbstractTermbank extends AbstractBank
     row.add("Type");
     
     for (ScoreType type : this.scoreTypes) {
-    	row.add(type.toString());
+        row.add(type.toString());
+    }
+    
+    if (documentDetails) {
+        row.add("documentID");
+        row.add("termFrequency");
     }
     
     csvWriter.writeNext(row.toArray(new String[row.size()]),false);
@@ -322,6 +329,27 @@ public abstract class AbstractTermbank extends AbstractBank
 	  }
 	  
 	  csvWriter.writeNext(row.toArray(new String[row.size()]),false);
+  }
+  
+public void writeCSVTermDocumentData(ICSVWriter csvWriter, Term term) {
+	  
+	  for (DocumentIdentifier docID : getTermDocuments().get(term)) {
+	  
+		  List<String> row = new ArrayList<String>();
+		  
+		  row.add(term.getTermString());
+		  row.add(term.getLanguageCode());
+		  row.add(term.getType());
+		  
+		  for (ScoreType type : this.scoreTypes) {
+			  row.add(this.getScore(type, term).toString());
+		  }
+		  
+		  row.add(docID.getIdentifier());
+		  row.add(Integer.toString(docID.getIndex()));
+		  
+		  csvWriter.writeNext(row.toArray(new String[row.size()]),false);
+	  }
   }
 
   @CreoleParameter(comment = "input annotation types",

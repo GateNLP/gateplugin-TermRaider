@@ -20,6 +20,7 @@ import gate.creole.metadata.CreoleResource;
 import gate.gui.ActionsPublisher;
 import gate.termraider.modes.MergingMode;
 import gate.termraider.modes.Normalization;
+import gate.termraider.util.DocumentIdentifier;
 import gate.termraider.util.ScoreType;
 import gate.termraider.util.Term;
 import gate.termraider.util.Utilities;
@@ -52,7 +53,7 @@ public class AnnotationTermbank extends AbstractTermbank
   
   protected void processDocument(Document document, int index) {
     documentCount++;
-    String documentSource = Utilities.docIdentifier(document, idDocumentFeature, index);
+    DocumentIdentifier documentSource = Utilities.docIdentifier(document, idDocumentFeature, index);
     AnnotationSet candidates = document.getAnnotations(inputASName).get(inputAnnotationTypes);
 
     for (Annotation candidate : candidates) {
@@ -79,13 +80,14 @@ public class AnnotationTermbank extends AbstractTermbank
 
 
   public void calculateScores() {
-    for (Term term : termDocuments.keySet()) {
+	for (Map.Entry<Term, Set<DocumentIdentifier>> entry : termDocuments.entrySet()) {
+	  Term term = entry.getKey();
       languages.add(term.getLanguageCode());
       types.add(term.getType());
       
       Double rawScore = MergingMode.calculate(mergingMode, termIndividualScores.get(term));
       Utilities.setScoreTermValue(scores, rawScoreST, term, rawScore);
-      int localDF = termDocuments.get(term).size();
+      int localDF = entry.getValue().size();
       Utilities.setScoreTermValue(scores, localDocFrequencyST, term, localDF);
       double normalized = Normalization.calculate(normalization, rawScore);
       Utilities.setScoreTermValue(scores, getDefaultScoreType(), term, normalized);
@@ -103,7 +105,7 @@ public class AnnotationTermbank extends AbstractTermbank
       scores.put(st, new HashMap<Term, Number>());
     }
     termIndividualScores = new HashMap<Term, List<Double>>();
-    termDocuments        = new HashMap<Term, Set<String>>();
+    termDocuments        = new HashMap<Term, Set<DocumentIdentifier>>();
     languages = new HashSet<String>();
     types = new HashSet<String>();
   }

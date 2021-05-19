@@ -17,6 +17,7 @@ import gate.Document;
 import gate.creole.metadata.CreoleParameter;
 import gate.creole.metadata.CreoleResource;
 import gate.gui.ActionsPublisher;
+import gate.termraider.util.DocumentIdentifier;
 import gate.termraider.util.Term;
 import gate.termraider.util.UnorderedTermPair;
 import gate.termraider.util.Utilities;
@@ -50,14 +51,14 @@ public class PMIBank extends AbstractPairbank
   private int totalCount, totalPairCount;
   private Set<Set<Integer>> seenCombinations;
   private Set<Integer> seen;
-  private Map<Term, Set<String>> termDocuments;
+  private Map<Term, Set<DocumentIdentifier>> termDocuments;
   protected Map<Term, Integer> termCount;
 
   
   
   protected void addData(Document document, int index) {
     // TODO: add support for the doc ID feature
-    String documentSource = Utilities.docIdentifier(document, null, index);
+    DocumentIdentifier documentSource = Utilities.docIdentifier(document, null, index);
     /** Collocations that have already been processed in this document
      * (each collocation is a pair of IDs for a Token annotation), to avoid counting
      * them again.     */
@@ -103,7 +104,7 @@ public class PMIBank extends AbstractPairbank
    * @param document
    * @param source
    */
-  private void processWindow(List<Annotation> window, AnnotationSet inners, Document document, String source) {
+  private void processWindow(List<Annotation> window, AnnotationSet inners, Document document, DocumentIdentifier source) {
     Long start = window.get(0).getStartNode().getOffset();
     Long end = window.get(window.size() - 1).getEndNode().getOffset();
     List<Annotation> terms = gate.Utils.inDocumentOrder(inners.getContained(start, end));
@@ -129,7 +130,7 @@ public class PMIBank extends AbstractPairbank
    * @param document
    * @param source
    */
-  private void processTerms(Annotation ann0, Annotation ann1, Document document, String source) {
+  private void processTerms(Annotation ann0, Annotation ann1, Document document, DocumentIdentifier source) {
     Term term0 = makeTerm(ann0, document);
     Term term1 = makeTerm(ann1, document);
     UnorderedTermPair pair = new UnorderedTermPair(term0, term1);
@@ -149,16 +150,16 @@ public class PMIBank extends AbstractPairbank
   }
   
   
-  private void incrementTermCount(Term term, String source) {
+  private void incrementTermCount(Term term, DocumentIdentifier source) {
     int count;
-    Set<String> sources;
+    Set<DocumentIdentifier> sources;
     if (termCount.containsKey(term)) {
       count = termCount.get(term);
       sources = termDocuments.get(term);
     }
     else {
       count = 0;
-      sources = new HashSet<String>();
+      sources = new HashSet<DocumentIdentifier>();
     }
     count++;
     sources.add(source);
@@ -167,16 +168,16 @@ public class PMIBank extends AbstractPairbank
   }
 
   
-  private void incrementPairCount(UnorderedTermPair pair, String source) {
+  private void incrementPairCount(UnorderedTermPair pair, DocumentIdentifier source) {
     int count;
-    Set<String> sources;
+    Set<DocumentIdentifier> sources;
     if (pairCount.containsKey(pair)) {
       count = pairCount.get(pair);
       sources = documents.get(pair);
     }
     else {
       count = 0;
-      sources = new HashSet<String>();
+      sources = new HashSet<DocumentIdentifier>();
     }
     count++;
     sources.add(source);
@@ -274,7 +275,7 @@ public class PMIBank extends AbstractPairbank
   
   protected void resetImplScores() {
     termCount = new HashMap<Term, Integer>();
-    termDocuments = new HashMap<Term, Set<String>>();
+    termDocuments = new HashMap<Term, Set<DocumentIdentifier>>();
     totalCount = 0;
     totalPairCount = 0;
   }
@@ -285,15 +286,16 @@ public class PMIBank extends AbstractPairbank
     double totalCountF = (double) totalCount;
     double totalPairCountF = (double) totalPairCount;
     Map<Term, Double> termProb = new HashMap<Term, Double>();
-    for (Term term : termCount.keySet()) {
-      double prob = ((double) termCount.get(term)) / totalCountF;
-      termProb.put(term, prob);
+    for (Map.Entry<Term, Integer> entry : termCount.entrySet()) {
+      double prob = ((double) entry.getValue()) / totalCountF;
+      termProb.put(entry.getKey(), prob);
     }
     
-    for (UnorderedTermPair pair : this.pairCount.keySet()) {
+    for (Map.Entry<UnorderedTermPair, Integer> entry : pairCount.entrySet()) {
+      UnorderedTermPair pair = entry.getKey();
       double px = termProb.get(pair.getTerm0());
       double py = termProb.get(pair.getTerm1());
-      double pxy = ((double) pairCount.get(pair)) / totalPairCountF;
+      double pxy = ((double) entry.getValue()) / totalPairCountF;
       
       /*  Notes
        * 
