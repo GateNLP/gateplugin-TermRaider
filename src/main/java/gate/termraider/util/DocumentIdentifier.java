@@ -1,6 +1,10 @@
 package gate.termraider.util;
 
-public class DocumentIdentifier {
+import java.io.Serializable;
+
+public class DocumentIdentifier implements Serializable {
+	
+	private static final long serialVersionUID = -6093334229254695896L;
 	
 	private String identifier;
 	private int index;
