@@ -8,18 +8,18 @@
 		<groupId>uk.ac.gate</groupId>
 		<artifactId>gate-plugin-base</artifactId>
 		<!-- this should be the version of GATE you wish to build against -->
-		<version>8.6-SNAPSHOT</version>
+		<version>8.6</version>
 		<relativePath/>
 	</parent>
-
+	
 	<name>TermRaider</name>
 	<description>TermRaider is a set of term extraction and scoring tools</description>
 	
 	<!-- this is the description of this plugin -->
 	<groupId>uk.ac.gate.plugins</groupId>
 	<artifactId>termraider</artifactId>
-	<version>8.7-SNAPSHOT</version>
-
+	<version>9.0-SNAPSHOT</version>
+  
 	<licenses>
 		<license>
 			<name>GNU Lesser General Public License (LGPL), Version 3</name>
@@ -51,6 +51,13 @@
 	<dependencies>
 		<!-- add any other libraries your plugin depends on. Any other GATE plugins 
 			you depend on at compile time should use the provided scope -->
+			
+		<dependency>
+			<groupId>com.opencsv</groupId>
+			<artifactId>opencsv</artifactId>
+			<version>5.4</version>
+		</dependency>
+		
 	</dependencies>
 
 </project>

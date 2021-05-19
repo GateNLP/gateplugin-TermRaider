@@ -44,7 +44,7 @@ public class SliderPanel extends JPanel {
     if (minScore instanceof Integer) {
       imin = minScore.intValue();
       imax = this.scoredbank.getMaxScore().intValue();
-      middle = (int) ( (imin + imax) / 2);
+      middle = (imin + imax) / 2;
     }
 
     // This is for everything else

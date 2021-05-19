@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2010--2014, The University of Sheffield. See the file
+ *  Copyright (c) 2010--2021, The University of Sheffield. See the file
  *  COPYRIGHT.txt in the software or at http://gate.ac.uk/gate/COPYRIGHT.txt
  *
  *  This file is part of GATE (see http://gate.ac.uk/), and is free
@@ -11,41 +11,61 @@
  */
 package gate.termraider.output;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.List;
+
+import com.opencsv.CSVWriterBuilder;
+import com.opencsv.ICSVWriter;
+import com.opencsv.RFC4180Parser;
+import com.opencsv.RFC4180ParserBuilder;
+
 import gate.termraider.bank.AbstractBank;
 import gate.termraider.bank.AbstractTermbank;
 import gate.termraider.util.Term;
 import gate.util.GateException;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
-import java.util.List;
 
 
 public class CsvGenerator {
   
   public static void generateAndSaveCsv(AbstractTermbank bank, 
-          Number threshold, File outputFile) throws GateException {
-    PrintWriter writer = initializeWriter(outputFile);
-    addComment(bank, "threshold = " + threshold);
-    List<Term> sortedTerms = bank.getTermsByDescendingScore();
+          Number threshold, File outputFile, boolean documentDetails) throws GateException {
+        
+    RFC4180Parser parser = new RFC4180ParserBuilder()
+        .withSeparator(',')
+        .withQuoteChar('"')
+        .build();
+
+    try (ICSVWriter csvWriter = new CSVWriterBuilder(new FileWriter(outputFile))
+        .withParser(parser)
+	    .withLineEnd(ICSVWriter.RFC4180_LINE_END)
+	    .build();) {
+
+        addComment(bank, "threshold = " + threshold);
+        List<Term> sortedTerms = bank.getTermsByDescendingScore();
     
-    addComment(bank, "Unfiltered nbr of terms = " + sortedTerms.size());
-    int written = 0;
-    writer.println(bank.getCsvHeader());
+        addComment(bank, "Unfiltered nbr of terms = " + sortedTerms.size());
+        int written = 0;
+        bank.writeCSVHeader(csvWriter, documentDetails);
     
-    for (Term term : sortedTerms) {
-      Number score = bank.getDefaultScores().get(term);
-      if (score.doubleValue() >= threshold.doubleValue()) {
-        writer.println(bank.getCsvLine(term));
-        written++;
-      }
-      else {  // the rest must be lower
-        break;
-      }
-    }
-    addComment(bank, "Filtered nbr of terms = " + written);
-    
-    writer.flush();
+        for (Term term : sortedTerms) {
+            Number score = bank.getDefaultScores().get(term);
+            if (score.doubleValue() >= threshold.doubleValue()) {
+            	if (documentDetails)
+            		bank.writeCSVTermDocumentData(csvWriter, term);
+            	else
+            		bank.writeCSVTermData(csvWriter, term);
+                written++;
+            }
+            else {  // the rest must be lower
+                break;
+            }
+        }
+        addComment(bank, "Filtered nbr of terms = " + written);
+    } catch (IOException e) {
+		throw new GateException(e);
+	}
   }
 
   
@@ -53,16 +73,5 @@ public class CsvGenerator {
     if (termbank.getDebugMode()) {
       System.out.println(commentStr);
     }
-  }
-  
-  
-  private static PrintWriter initializeWriter(File outputFile) throws GateException {
-    try {
-      return new PrintWriter(outputFile);
-    } 
-    catch(FileNotFoundException e) {
-      throw new GateException(e);
-    }
-  }
-  
+  }  
 }

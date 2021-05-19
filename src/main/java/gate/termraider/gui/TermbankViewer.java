@@ -24,6 +24,7 @@ import gate.termraider.bank.AbstractTermbank;
 import gate.termraider.bank.HyponymyTermbank;
 import gate.termraider.gui.ColorMenu.Callback;
 import gate.termraider.output.CloudGenerator;
+import gate.termraider.util.DocumentIdentifier;
 import gate.termraider.util.ScoreType;
 import gate.termraider.util.Term;
 import java.awt.BorderLayout;
@@ -107,7 +108,7 @@ public class TermbankViewer
   protected void populateTree(DefaultMutableTreeNode root, AbstractTermbank termbank) {
     List<Term> typeSortedTerms = termbank.getTermsByDescendingScore();
     Map<Term, Number> typeTermScores = termbank.getDefaultScores();
-    Map<Term, Set<String>> typeTermDocuments = termbank.getTermDocuments();
+    Map<Term, Set<DocumentIdentifier>> typeTermDocuments = termbank.getTermDocuments();
     
     DefaultMutableTreeNode node1, node2;
     int minScore = sliderPanel.getValue();
@@ -118,8 +119,8 @@ public class TermbankViewer
         node1 = new DefaultMutableTreeNode(term + "  " + score.toString());
         root.add(node1);
         
-        for (String document : typeTermDocuments.get(term)) {
-          node2 = new DefaultMutableTreeNode(document);
+        for (DocumentIdentifier document : typeTermDocuments.get(term)) {
+          node2 = new DefaultMutableTreeNode(document.toString());
           node1.add(node2);
         }
       }

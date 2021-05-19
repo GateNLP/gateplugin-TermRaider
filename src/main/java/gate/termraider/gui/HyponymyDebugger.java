@@ -13,6 +13,7 @@ package gate.termraider.gui;
 
 import gate.creole.ANNIEConstants;
 import gate.termraider.bank.HyponymyTermbank;
+import gate.termraider.util.DocumentIdentifier;
 import gate.termraider.util.Term;
 import gate.termraider.util.TermComparator;
 import java.awt.BorderLayout;
@@ -93,7 +94,8 @@ public class HyponymyDebugger
 class HDTableModel extends AbstractTableModel {
   private static final long serialVersionUID = -1124137938074923640L;
   private String[] columnNames = {"term", "score", "docs", "docs", "hyponyms", "hyponyms", "heads"};
-  private Map<Term, Set<String>> termDocuments, termHyponyms, termHeads;
+  private Map<Term, Set<String>> termHyponyms, termHeads;
+  private Map<Term, Set<DocumentIdentifier>> termDocuments;
   private List<Term> terms;
   private HyponymyTermbank termbank;
   

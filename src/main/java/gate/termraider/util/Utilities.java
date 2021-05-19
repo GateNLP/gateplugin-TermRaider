@@ -131,7 +131,7 @@ public class Utilities implements ANNIEConstants {
   }
 
   
-  public static String docIdentifier(Document document, String feature, int index) {
+  public static DocumentIdentifier docIdentifier(Document document, String feature, int index) {
     String identifier = null;
     if ( (feature != null) && (! feature.isEmpty() ) &&      
             document.getFeatures().containsKey(feature) ) { 
@@ -152,7 +152,7 @@ public class Utilities implements ANNIEConstants {
       identifier = document.getName();
     }
 
-    return String.format("%s [%d]", identifier, index);
+    return new DocumentIdentifier(identifier, index);
   }
   
 
@@ -193,13 +193,13 @@ public class Utilities implements ANNIEConstants {
   }
 
   
-  public static void addToMapSet(Map<Term, Set<String>> map, Term key, String value) {
-    Set<String> valueSet;
+  public static <T> void addToMapSet(Map<Term, Set<T>> map, Term key, T value) {
+    Set<T> valueSet;
     if (map.containsKey(key)) {
       valueSet = map.get(key);
     }
     else {
-      valueSet = new HashSet<String>();
+      valueSet = new HashSet<T>();
     }
     
     valueSet.add(value);
@@ -244,13 +244,13 @@ public class Utilities implements ANNIEConstants {
   }
 
   
-  public static Set<String> getStringSetFromMap(Map<Term, Set<String>> map, Term key) {
+  public static <T> Set<T> getStringSetFromMap(Map<Term, Set<T>> map, Term key) {
     if (map.containsKey(key)) {
       return map.get(key);
     }
     
     //implied else
-    Set<String> valueSet = new HashSet<String>();
+    Set<T> valueSet = new HashSet<T>();
     map.put(key, valueSet);
     return valueSet;
   }
