@@ -11,19 +11,6 @@
  */
 package gate.termraider.bank;
 
-import gate.Annotation;
-import gate.AnnotationSet;
-import gate.Document;
-import gate.FeatureMap;
-import gate.creole.metadata.CreoleParameter;
-import gate.creole.metadata.CreoleResource;
-import gate.gui.ActionsPublisher;
-import gate.termraider.modes.MergingMode;
-import gate.termraider.modes.Normalization;
-import gate.termraider.util.DocumentIdentifier;
-import gate.termraider.util.ScoreType;
-import gate.termraider.util.Term;
-import gate.termraider.util.Utilities;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -31,13 +18,25 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import gate.Annotation;
+import gate.AnnotationSet;
+import gate.Document;
+import gate.FeatureMap;
+import gate.creole.metadata.CreoleParameter;
+import gate.creole.metadata.CreoleResource;
+import gate.termraider.modes.MergingMode;
+import gate.termraider.modes.Normalization;
+import gate.termraider.util.DocumentIdentifier;
+import gate.termraider.util.ScoreType;
+import gate.termraider.util.Term;
+import gate.termraider.util.Utilities;
+
 
 @CreoleResource(name = "AnnotationTermbank",
     icon = "termbank-lr.png",
     comment = "TermRaider Termbank derived from document annotations",
     helpURL = "http://gate.ac.uk/userguide/sec:creole:termraider:annotation")
-public class AnnotationTermbank extends AbstractTermbank
-    implements ActionsPublisher  {
+public class AnnotationTermbank extends AbstractTermbank {
 
   private static final long serialVersionUID = -775090785732060049L;
   

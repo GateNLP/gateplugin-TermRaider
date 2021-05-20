@@ -25,7 +25,6 @@ import gate.FeatureMap;
 import gate.Utils;
 import gate.creole.metadata.CreoleParameter;
 import gate.creole.metadata.CreoleResource;
-import gate.gui.ActionsPublisher;
 import gate.termraider.modes.Normalization;
 import gate.termraider.util.DocumentIdentifier;
 import gate.termraider.util.ScoreType;
@@ -39,8 +38,7 @@ import gate.termraider.util.Utilities;
         comment = "TermRaider Termbank derived from head/string hyponymy",
         helpURL = "http://gate.ac.uk/userguide/sec:creole:termraider:hyponymy")
 
-public class HyponymyTermbank extends AbstractTermbank
-    implements ActionsPublisher  {
+public class HyponymyTermbank extends AbstractTermbank {
 
   private static final long serialVersionUID = -2382834479385875682L;
 

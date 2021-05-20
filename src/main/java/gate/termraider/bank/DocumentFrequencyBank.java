@@ -25,7 +25,6 @@ import gate.Resource;
 import gate.creole.ResourceInstantiationException;
 import gate.creole.metadata.CreoleParameter;
 import gate.creole.metadata.CreoleResource;
-import gate.gui.ActionsPublisher;
 import gate.termraider.util.DocumentIdentifier;
 import gate.termraider.util.ScoreType;
 import gate.termraider.util.Term;
@@ -36,8 +35,7 @@ import gate.termraider.util.Utilities;
 icon = "termbank-lr.png",
 comment = "Document frequency counter derived from corpora and other DFBs",
 helpURL = "http://gate.ac.uk/userguide/sec:creole:termraider:docfrequency")
-public class DocumentFrequencyBank extends AbstractTermbank
-implements ActionsPublisher{
+public class DocumentFrequencyBank extends AbstractTermbank {
   
   private static final long serialVersionUID = 8486379203429800194L;
 

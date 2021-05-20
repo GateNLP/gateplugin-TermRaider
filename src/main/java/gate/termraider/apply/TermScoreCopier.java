@@ -18,7 +18,6 @@ import java.util.Set;
 import gate.Annotation;
 import gate.AnnotationSet;
 import gate.FeatureMap;
-import gate.ProcessingResource;
 import gate.creole.AbstractLanguageAnalyser;
 import gate.creole.ExecutionException;
 import gate.creole.ExecutionInterruptedException;
@@ -35,8 +34,7 @@ import gate.termraider.util.Term;
     icon = "termbank-lr.png",
     comment = "Copy scores from Termbanks back to their source annotations",
     helpURL = "http://gate.ac.uk/userguide/sec:creole:termraider:copier")
-public class TermScoreCopier extends AbstractLanguageAnalyser
-  implements  ProcessingResource {
+public class TermScoreCopier extends AbstractLanguageAnalyser {
 
   private static final long serialVersionUID = -6975121300500542261L;
   

@@ -11,22 +11,22 @@
  */
 package gate.termraider.bank;
 
-import gate.Annotation;
-import gate.AnnotationSet;
-import gate.Document;
-import gate.creole.metadata.CreoleParameter;
-import gate.creole.metadata.CreoleResource;
-import gate.gui.ActionsPublisher;
-import gate.termraider.util.DocumentIdentifier;
-import gate.termraider.util.Term;
-import gate.termraider.util.UnorderedTermPair;
-import gate.termraider.util.Utilities;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import gate.Annotation;
+import gate.AnnotationSet;
+import gate.Document;
+import gate.creole.metadata.CreoleParameter;
+import gate.creole.metadata.CreoleResource;
+import gate.termraider.util.DocumentIdentifier;
+import gate.termraider.util.Term;
+import gate.termraider.util.UnorderedTermPair;
+import gate.termraider.util.Utilities;
 
 
 
@@ -35,8 +35,7 @@ import java.util.Set;
         comment = "Pointwise Mutual Information from corpora",
         helpURL = "http://gate.ac.uk/userguide/sec:creole:termraider:pmi")
 
-public class PMIBank extends AbstractPairbank
-    implements ActionsPublisher  {
+public class PMIBank extends AbstractPairbank {
 
   private static final long serialVersionUID = -5727540527631075420L;
 

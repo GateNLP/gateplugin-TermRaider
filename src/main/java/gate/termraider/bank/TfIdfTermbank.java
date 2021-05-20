@@ -11,6 +11,12 @@
  */
 package gate.termraider.bank;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 import gate.Annotation;
 import gate.AnnotationSet;
 import gate.Document;
@@ -20,7 +26,6 @@ import gate.creole.ResourceInstantiationException;
 import gate.creole.metadata.CreoleParameter;
 import gate.creole.metadata.CreoleResource;
 import gate.creole.metadata.Optional;
-import gate.gui.ActionsPublisher;
 import gate.termraider.modes.IdfCalculation;
 import gate.termraider.modes.Normalization;
 import gate.termraider.modes.TfCalculation;
@@ -28,11 +33,6 @@ import gate.termraider.util.DocumentIdentifier;
 import gate.termraider.util.ScoreType;
 import gate.termraider.util.Term;
 import gate.termraider.util.Utilities;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 
 
 @CreoleResource(name = "TfIdfTermbank",
@@ -40,8 +40,7 @@ import java.util.Set;
         comment = "TermRaider Termbank derived from vectors in document features",
         helpURL = "http://gate.ac.uk/userguide/sec:creole:termraider:tfidf")
 
-public class TfIdfTermbank extends AbstractTermbank
-    implements ActionsPublisher  {
+public class TfIdfTermbank extends AbstractTermbank {
 
   private static final long serialVersionUID = 2256964300070167978L;
   
