@@ -1,17 +1,24 @@
 package gate.termraider.util;
 
 import java.io.Serializable;
+import java.net.URL;
 
 public class DocumentIdentifier implements Serializable {
 	
 	private static final long serialVersionUID = -6093334229254695896L;
 	
 	private String identifier;
+	private URL url;
 	private int index;
-	
-	public DocumentIdentifier(String identifier, int index) {
+
+	public DocumentIdentifier(URL url, String identifier, int index) {
 		this.identifier = identifier;
 		this.index = index;
+		this.url = url;
+	}
+
+	public DocumentIdentifier(String identifier, int index) {
+		this(null,identifier,index);
 	}
 	
 	public String getIdentifier() {
@@ -21,7 +28,11 @@ public class DocumentIdentifier implements Serializable {
 	public int getIndex() {
 		return index;
 	}
-	
+
+	public URL getURL() {
+		return url;
+	}
+
 	@Override
 	public String toString() {
 		return String.format("%s [%d]", identifier, index);

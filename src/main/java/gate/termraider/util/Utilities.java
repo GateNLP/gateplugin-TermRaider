@@ -141,18 +141,22 @@ public class Utilities implements ANNIEConstants {
       }
     }
 
-    if (identifier == null) { 
+    if (identifier == null || identifier.isEmpty()) {
+        identifier = document.getName();
+      }
+
+    if (identifier == null || identifier.isEmpty()) {
       URL url = document.getSourceUrl();
       if (url != null) {
         identifier = url.toString();
       }
     }
-    
-    if (identifier == null) {
-      identifier = document.getName();
+
+    if (identifier == null || identifier.isEmpty()) {
+      identifier = "Document_"+document.hashCode();
     }
 
-    return new DocumentIdentifier(identifier, index);
+    return new DocumentIdentifier(document.getSourceUrl(),identifier, index);
   }
   
 

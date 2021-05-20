@@ -125,7 +125,7 @@ implements ActionsPublisher{
 
     for (Annotation segment : segments) {
       documentCount++;
-      DocumentIdentifier documentSegmentSource = new DocumentIdentifier(documentSource.toString(), segment.getId());
+      DocumentIdentifier documentSegmentSource = new DocumentIdentifier(documentSource.getURL(), documentSource.toString(), segment.getId());
       AnnotationSet localCandidates = gate.Utils.getContainedAnnotations(candidates, segment);
 
       Set<Term> documentTerms = new HashSet<Term>();

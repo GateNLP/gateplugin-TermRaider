@@ -294,6 +294,7 @@ public abstract class AbstractTermbank extends AbstractBank
     }
     
     if (documentDetails) {
+        row.add("documentURL");
         row.add("documentID");
         row.add("termFrequency");
     }
@@ -345,6 +346,7 @@ public void writeCSVTermDocumentData(ICSVWriter csvWriter, Term term) {
 			  row.add(this.getScore(type, term).toString());
 		  }
 		  
+		  row.add(docID.getURL() == null ? "" : docID.getURL().toString());
 		  row.add(docID.getIdentifier());
 		  row.add(Integer.toString(docID.getIndex()));
 		  
